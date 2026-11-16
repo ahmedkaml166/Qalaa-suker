@@ -309,5 +309,11 @@
         }
     </script>
 
+   <script>
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('data:text/javascript,')
+      .then(() => console.log('Service Worker Ready'));
+  }
+</script> 
 </body>
 </html>
