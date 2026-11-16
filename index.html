@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>منصة قلعة سكر الشاملة</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Cairo', sans-serif;
+        }
+        body {
+            background-color: #f4f7fa;
+            color: #1e293b;
+            line-height: 1.5;
+        }
+        header {
+            background: linear-gradient(135deg, #0f172a, #1e3a8a);
+            color: #ffffff;
+            padding: 20px 10px;
+            text-align: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        header h1 {
+            font-size: 22px;
+            font-weight: 800;
+            margin-bottom: 5px;
+        }
+        header p {
+            font-size: 13px;
+            color: #cbd5e1;
+            margin-bottom: 12px;
+        }
+        /* صندوق البحث الفوري */
+        .search-box {
+            width: 100%;
+            max-width: 450px;
+            margin: 0 auto;
+            display: flex;
+            background: #ffffff;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+        }
+        .search-box input {
+            flex: 1;
+            border: none;
+            padding: 10px 18px;
+            font-size: 14px;
+            outline: none;
+            font-family: 'Cairo', sans-serif;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 15px auto;
+            padding: 0 10px;
+        }
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .section-title {
+            font-size: 17px;
+            font-weight: 800;
+            color: #0f172a;
+            border-right: 4px solid #2563eb;
+            padding-right: 8px;
+        }
+        
+        /* تعديل شبكة العرض لتناسب الموبايل والحاسوب (عرض مصغر ومتجاور) */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* عمودين في الهواتف لتظهر عدة محلات فوراً */
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+
+        @media (min-width: 768px) {
+            .grid {
+                grid-template-columns: repeat(4, 1fr); /* 4 أعمدة في الشاشات المتوسطة والحواسيب */
+                gap: 15px;
+            }
+        }
+
+        [class^="card-shop-"], .product-card {
+            background: #ffffff;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: transform 0.2s;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        [class^="card-shop-"]:hover, .product-card:hover {
+            transform: translateY(-3px);
+        }
+        .badge {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            background-color: #10b981;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 10px;
+            font-weight: 700;
+        }
+        .card-img {
+            width: 100%;
+            height: 90px; /* تصغير ارتفاع الصورة لتظهر المحلات بشكل مصغر ومتراص */
+            background-color: #e2e8f0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #64748b;
+            font-weight: 700;
+            font-size: 11px;
+            text-align: center;
+            padding: 0 5px;
+        }
+        .card-body {
+            padding: 10px;
+        }
+        .store-category {
+            font-size: 10px;
+            color: #2563eb;
+            font-weight: 700;
+            margin-bottom: 2px;
+        }
+        .card-title {
+            font-size: 13px;
+            font-weight: 800;
+            margin-bottom: 4px;
+            color: #0f172a;
+        }
+        .items-count {
+            font-size: 10px;
+            color: #64748b;
+            margin-bottom: 8px;
+        }
+        .price {
+            font-size: 14px;
+            font-weight: 800;
+            color: #059669;
+            margin-bottom: 8px;
+        }
+        .btn-enter {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background-color: #1e3a8a;
+            color: #ffffff;
+            border: none;
+            padding: 7px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 11px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-enter:hover {
+            background-color: #2563eb;
+        }
+        .btn-whatsapp {
+            display: block;
+            width: 100%;
+            text-align: center;
+            background-color: #25D366;
+            color: #ffffff;
+            text-decoration: none;
+            padding: 7px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 11px;
+        }
+        .btn-back {
+            background-color: #0f172a;
+            color: #ffffff;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 12px;
+            cursor: pointer;
+        }
+        #shop-details-view {
+            display: none;
+        }
+        footer {
+            background-color: #0f172a;
+            color: #94a3b8;
+            text-align: center;
+            padding: 15px;
+            font-size: 12px;
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <h1>منصة قلعة سكر الشاملة</h1>
+        <p>دليل المحلات والمنتجات - ابحث عن القسم أو المحل بسهولة</p>
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="ابحث عن رقم أو اسم المحل..." onkeyup="filterShops()">
+        </div>
+    </header>
+
+    <div class="container">
+        
+        <!-- واجهة المحلات الرئيسية -->
+        <div id="main-shops-view">
+            <div class="section-header">
+                <h2 class="section-title">دليل المحلات (من 1 إلى 100)</h2>
+            </div>
+            <div id="shops-grid" class="grid"></div>
+        </div>
+
+        <!-- واجهة عرض منتجات المحل -->
+        <div id="shop-details-view">
+            <div class="section-header">
+                <h2 id="current-shop-title" class="section-title">منتجات المحل</h2>
+                <button class="btn-back" onclick="showAllShops()">← العودة للرئيسية</button>
+            </div>
+            <div id="products-grid" class="grid"></div>
+        </div>
+
+    </div>
+
+    <footer>
+        جميع الحقوق محفوظة © 2026 - منصة قلعة سكر الرقمية
+    </footer>
+
+    <script>
+        const shopsGrid = document.getElementById('shops-grid');
+        const mainView = document.getElementById('main-shops-view');
+        const detailsView = document.getElementById('shop-details-view');
+        const productsGrid = document.getElementById('products-grid');
+        const currentShopTitle = document.getElementById('current-shop-title');
+
+        // توليد البطاقات من 1 إلى 100
+        for (let i = 1; i <= 100; i++) {
+            shopsGrid.innerHTML += `
+                <div class="card-shop-${i} shop-card-item" data-name="محل رقم ${i}">
+                    <span class="badge">${i}</span>
+                    <div class="card-img">واجهة ${i}</div>
+                    <div class="card-body">
+                        <div class="store-category">عام</div>
+                        <div class="card-title">محل رقم ${i}</div>
+                        <div class="items-count">50+ قطعة</div>
+                        <button class="btn-enter" onclick="openShop(${i})">تصفح المنتجات</button>
+                    </div>
+                </div>
+            `;
+        }
+
+        // دالة البحث الفوري
+        function filterShops() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let cards = document.getElementsByClassName('shop-card-item');
+
+            for (let i = 0; i < cards.length; i++) {
+                let name = cards[i].getAttribute('data-name').toLowerCase();
+                if (name.includes(input) || input.includes(i + 1)) {
+                    cards[i].style.display = "flex";
+                } else {
+                    cards[i].style.display = "none";
+                }
+            }
+        }
+
+        // دالة فتح المحل وعرض 50 قطعة كاملة
+        function openShop(shopId) {
+            currentShopTitle.innerText = `محل رقم ${shopId} (50 قطعة)`;
+            productsGrid.innerHTML = '';
+
+            for (let p = 1; p <= 50; p++) {
+                productsGrid.innerHTML += `
+                    <div class="product-card">
+                        <span class="badge">${p}</span>
+                        <div class="card-img">القطعة ${p}</div>
+                        <div class="card-body">
+                            <div class="card-title">منتج ${p}</div>
+                            <div class="price">00,000 د.ع</div>
+                            <a href="#" class="btn-whatsapp">طلب واتساب</a>
+                        </div>
+                    </div>
+                `;
+            }
+
+            mainView.style.display = 'none';
+            detailsView.style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+
+        // دالة العودة للرئيسية
+        function showAllShops() {
+            detailsView.style.display = 'none';
+            mainView.style.display = 'block';
+            window.scrollTo(0, 0);
+        }
+    </script>
+
+</body>
+</html>
